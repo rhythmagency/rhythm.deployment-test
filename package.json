@@ -1,49 +1,46 @@
 {
-	"name": "rhythm.deployment-test",
-	"version": "1.0.1",
-	"description": "A simple test script to ensure that a website is ready to be deployed.",
-	"author": "Michael Lawrence <michael.lawrence@rhythmagency.com>",
-	"contributors": [
-		{
-			"name": "Michael Lawrence",
-			"email": "michael.lawrence@rhythmagency.com"
-		}
-	],
-
-	"main": "index.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-
-	"homepage": "http://rhythmagency.com",
-	"bugs": "https://github.com/rhythmagency/rhythm.deployment-test/issues",
-
-	"repository": {
-		"type": "git",
-		"url": "git@github.com:rhythmagency/rhythm.deployment-test.git"
-	},
-
-	"license": "MIT",
-	"dependencies": {
-		"colors": "^0.6.2",
-		"lodash": "^2.4.1",
-		"mocha": "^1.21.4",
-		"request": "^2.40.0",
-		"should": "^4.0.4",
-		"xmldom": "^0.1.19",
-		"zombie": "^2.0.0-alpha31"
-	},
-
-	"preferGlobal": true,
-	"bin": {
-		"rdt": "./bin/rdt"
-	},
-	"engines": {
-		"node": ">=0.10"
-	},
-	"keywords": [
-		"rhythm",
-		"deployment",
-		"test"
-	]
+  "name": "rhythm.deployment-test",
+  "version": "1.0.2",
+  "description": "A simple test script to ensure that a website is ready to be deployed.",
+  "author": "Michael Lawrence <michael.lawrence@rhythmagency.com>",
+  "contributors": [
+    {
+      "name": "Michael Lawrence",
+      "email": "michael.lawrence@rhythmagency.com"
+    }
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "homepage": "http://rhythmagency.com",
+  "bugs": "https://github.com/rhythmagency/rhythm.deployment-test/issues",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:rhythmagency/rhythm.deployment-test.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "PrettyCSS": "^0.3.8",
+    "colors": "^0.6.2",
+    "lodash": "^2.4.1",
+    "mocha": "^1.21.4",
+    "request": "^2.40.0",
+    "should": "^4.0.4",
+    "w3c-validate": "0.0.2",
+    "xmldom": "^0.1.19",
+    "zombie": "^2.0.0-alpha31"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "rdt": "./bin/rdt"
+  },
+  "engines": {
+    "node": ">=0.10"
+  },
+  "keywords": [
+    "rhythm",
+    "deployment",
+    "test"
+  ]
 }

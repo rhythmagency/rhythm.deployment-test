@@ -13,6 +13,7 @@ var _ = require('lodash'),
 	Browser = require('zombie'),
 	https = require('https'),
 	colors = require('colors'),
+	w3c = require('w3c-validate').createValidator(),
 	DOMParser = require('xmldom').DOMParser,
 	browser = new Browser(),
 
@@ -22,7 +23,10 @@ var _ = require('lodash'),
 // This is set from index.js and passed in from a command-line argument.
 	domain = process.env.RHYTHM_DEPLOYMENT_TEST_DOMAIN,
 
-	url = 'http://' + domain + '/',
+// This is set from index.js and passed in from a command-line argument.
+	port = process.env.RHYTHM_DEPLOYMENT_TEST_PORT,
+
+	url = 'http://' + domain + (port ? ':' + port : '') + '/',
 	urlSSL = 'https://' + domain + '/',
 	data = {},
 	timeout = 15000,
@@ -61,8 +65,31 @@ var _ = require('lodash'),
 describe('Checking ' + domain, function () {
 	if (googleApiKey) {
 		fnDownloadData('pagespeed', 'Checking Google PageSpeed...', 'https://www.googleapis.com/pagespeedonline/v1/runPagespeed?key=' + googleApiKey + '&url=' + url);
-		fnDownloadData('htmlValidator', 'Checking W3C HTML Validator...', 'http://validator.w3.org/check?output=json&uri=' + url);
 		fnDownloadData('cssValidator', 'Checking W3C CSS Validator...', 'http://jigsaw.w3.org/css-validator/validator?warning=0&profile=css3&output=json&uri=' + url);
+
+		it('Should not have HTML validation errors', function (done) {
+			this.timeout(timeout);
+
+			console.log('    ✓ '.green + 'Checking W3C HTML Validator...'.blue);
+
+			request.get({
+				'url': url,
+				'headers': {
+					'content-type': 'application/json; charset=UTF-8',
+					'user-agent': 'node.js'
+				}
+			}, function (err, res, body) {
+				should.not.exist(err);
+
+				w3c.validate(body, done);
+			});
+		});
+
+		it('Should not have CSS validation errors', function () {
+			data.cssValidator.cssvalidation.validity.should.be.ok;
+			data.cssValidator.cssvalidation.result.errorcount.should.equal(0);
+		});
+
 		fnCheckUrlExists('favicon.ico');
 		fnCheckUrlExists('sitemap.xml');
 
@@ -127,15 +154,6 @@ describe('Checking ' + domain, function () {
 
 		it('Should have optimized images', function () {
 			data.pagespeed.formattedResults.ruleResults.OptimizeImages.ruleImpact.should.be.lessThan(0.5);
-		});
-
-		it('Should not have HTML validation errors', function () {
-			data.htmlValidator.messages.length.should.equal(0);
-		})
-
-		it('Should not have CSS validation errors', function () {
-			data.cssValidator.cssvalidation.validity.should.be.ok;
-			data.cssValidator.cssvalidation.result.errorcount.should.equal(0);
 		});
 
 		it('Should have Google Analytics installed', function (done) {

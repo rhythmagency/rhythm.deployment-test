@@ -11,4 +11,10 @@ A simple test script to ensure that a website is ready to be deployed.
 
 Make sure to set the local environment variable 'GOOGLE_API_KEY' to your Google API key before running your tests.
 
-	rdt rhythmagency.com
+	rdt domain [port]
+
+### Examples
+
+	rdt mydomain.com
+	
+	rdt test.mydomain.com 8080
